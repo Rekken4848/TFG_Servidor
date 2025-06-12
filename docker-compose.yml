@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:17.5
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: nutricion_app
+      POSTGRES_USER: rekke­n
+      POSTGRES_PASSWORD: 4848
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: spring_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      POSTGRES_URL: jdbc:postgresql://db:5432/nutricion_app
+      POSTGRES_USER: rekke­n
+      POSTGRES_PASSWORD: 4848
+
+volumes:
+  db_data:
