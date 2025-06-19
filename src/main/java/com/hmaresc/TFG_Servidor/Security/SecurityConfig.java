@@ -25,6 +25,8 @@ public class SecurityConfig {
                                 .permitAll()
                                 .requestMatchers("/userstats/**")
                                 .permitAll()
+                                .requestMatchers("/auth/**")
+                                .permitAll()
                 )
                 .csrf(csrf -> csrf.disable());
         return  http.build();
