@@ -3,6 +3,7 @@ package com.hmaresc.TFG_Servidor.service;
 import com.hmaresc.TFG_Servidor.repository.UserRepository;
 import com.hmaresc.TFG_Servidor.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,6 +15,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // .................................................................
     //  << GET >>
@@ -42,6 +45,8 @@ public class UserService {
     //  << POST >>
     // .................................................................
     public User createUser(User user) {
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         return userRepository.save(user);
     }
 

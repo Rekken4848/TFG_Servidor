@@ -1,5 +1,6 @@
 package com.hmaresc.TFG_Servidor.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
@@ -23,9 +24,15 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(name = "last_name", nullable = false)
+    @JsonProperty("last_name")
+    private String lastName;
+
     @Column(name = "creation_date", nullable = false)
+    @JsonProperty("creation_date")
     private LocalDate creationDate;
 
     // Getters y Setters
@@ -68,6 +75,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public LocalDate getCreationDate() {
