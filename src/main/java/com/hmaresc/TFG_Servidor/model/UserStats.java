@@ -1,7 +1,10 @@
 package com.hmaresc.TFG_Servidor.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+
+import java.util.Base64;
 
 @Entity
 public class UserStats {
@@ -13,8 +16,10 @@ public class UserStats {
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     @JsonProperty("user_id")
+    @JsonIgnore
     private User user;
 
+    @JsonIgnore
     @Column(name = "profile_image", columnDefinition = "BYTEA")
     //@JsonProperty("profile_image")
     private byte[] profileImage;
@@ -63,6 +68,11 @@ public class UserStats {
 
     public void setProfileImage(byte[] profileImage) {
         this.profileImage = profileImage;
+    }
+
+    @JsonProperty("profile_image")
+    public String getProfileImageBase64() {
+        return profileImage != null ? Base64.getEncoder().encodeToString(profileImage) : null;
     }
 
     public int getAge() {

@@ -1,5 +1,6 @@
 package com.hmaresc.TFG_Servidor.service;
 
+import com.hmaresc.TFG_Servidor.model.User;
 import com.hmaresc.TFG_Servidor.model.UserStats;
 import com.hmaresc.TFG_Servidor.model.UsersRecipes;
 import com.hmaresc.TFG_Servidor.repository.UserStatsRepository;
@@ -24,6 +25,10 @@ public class UserStatsService {
 
     public Optional<UserStats> getUserStatsById(Long id) {
         return userStatsRepository.findById(id);
+    }
+
+    public Optional<UserStats> getUserStatsByUser(User user) {
+        return userStatsRepository.findByUser(user);
     }
 
     // .................................................................
