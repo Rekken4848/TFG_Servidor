@@ -150,6 +150,7 @@ public class UserStatsController {
         }
 
         User user = optionalUser.get();
+        user.setId(updatedDto.getId());
         user.setName(updatedDto.getName());
         user.setLastName(updatedDto.getLastName());
         user.setEmail(updatedDto.getEmail());
@@ -169,6 +170,7 @@ public class UserStatsController {
         stats.setWeight(updatedDto.getUserStats().getWeight());
         stats.setActivityLevel(updatedDto.getUserStats().getActivityLevel());*/
 
+        updatedDto.getUserStats().setUser(user);
         userStatsService.updateUserStats(updatedDto.getUserStats().getId(), updatedDto.getUserStats());
 
         //return ResponseEntity.ok().build();
