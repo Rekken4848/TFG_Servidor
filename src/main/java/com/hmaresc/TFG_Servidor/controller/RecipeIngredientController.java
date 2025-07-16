@@ -1,7 +1,7 @@
 package com.hmaresc.TFG_Servidor.controller;
 
-import com.hmaresc.TFG_Servidor.model.Recipe;
-import com.hmaresc.TFG_Servidor.service.RecipeService;
+import com.hmaresc.TFG_Servidor.model.RecipeIngredient;
+import com.hmaresc.TFG_Servidor.service.RecipeIngredientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/recipe")
-public class RecipeController {
+@RequestMapping("/recipeingredient")
+public class RecipeIngredientController {
 
     @Autowired
-    private RecipeService recipeService;
+    private RecipeIngredientService recipeIngredientService;
 
     // .......................................................
     // .......................................................
@@ -23,22 +23,22 @@ public class RecipeController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // GET /recipe/
+    // GET /recipeingredient/
     // .......................................................
     @GetMapping
-    public List<Recipe> getAllRecipes() {
-        return recipeService.getAllRecipes();
+    public List<RecipeIngredient> getAllRecipesIngredient() {
+        return recipeIngredientService.getAllRecipesIngredient();
     }
 
     // .......................................................
-    // GET /recipe/<id>
+    // GET /recipeingredient/<id>
     // .......................................................
     @GetMapping("/{id}")
-    public ResponseEntity<Recipe> getRecipeById(@PathVariable Long id) {
-        Optional<Recipe> recipe = recipeService.getRecipeById(id);
+    public ResponseEntity<RecipeIngredient> getRecipeIngredientById(@PathVariable Long id) {
+        Optional<RecipeIngredient> recipeIngredient = recipeIngredientService.getRecipeIngredientById(id);
 
-        if (recipe.isPresent()) {
-            return ResponseEntity.ok(recipe.get());
+        if (recipeIngredient.isPresent()) {
+            return ResponseEntity.ok(recipeIngredient.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -50,11 +50,11 @@ public class RecipeController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // POST /recipe/
+    // POST /recipeingredient/
     // .......................................................
     @PostMapping
-    public ResponseEntity<Recipe> createRecipe(@Valid @RequestBody Recipe recipe) {
-        Recipe created = recipeService.createRecipe(recipe);
+    public ResponseEntity<RecipeIngredient> createRecipeIngredient(@Valid @RequestBody RecipeIngredient recipeIngredient) {
+        RecipeIngredient created = recipeIngredientService.createRecipeIngredient(recipeIngredient);
         return ResponseEntity.ok(created);
     }
 
@@ -64,12 +64,12 @@ public class RecipeController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // UPDATE /recipe/<id>
+    // UPDATE /recipeingredient/<id>
     // .......................................................
     @PutMapping("/{id}")
-    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @Valid @RequestBody Recipe recipeDetails) {
-        Optional<Recipe> updatedRecipe = recipeService.updateRecipe(id, recipeDetails);
-        return updatedRecipe.map(ResponseEntity::ok)
+    public ResponseEntity<RecipeIngredient> updateRecipeIngredient(@PathVariable Long id, @Valid @RequestBody RecipeIngredient recipeIngredientDetails) {
+        Optional<RecipeIngredient> updatedRecipeIngredient = recipeIngredientService.updateRecipeIngredient(id, recipeIngredientDetails);
+        return updatedRecipeIngredient.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -79,11 +79,11 @@ public class RecipeController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // DELETE /recipe/<id>
+    // DELETE /recipeingredient/<id>
     // .......................................................
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
-        boolean deleted = recipeService.deleteRecipe(id);
+    public ResponseEntity<Void> deleteRecipeIngredient(@PathVariable Long id) {
+        boolean deleted = recipeIngredientService.deleteRecipeIngredient(id);
         if (deleted) {
             return ResponseEntity.noContent().build();
         }

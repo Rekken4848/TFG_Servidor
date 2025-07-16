@@ -1,6 +1,8 @@
 package com.hmaresc.TFG_Servidor.controller;
 
 import com.hmaresc.TFG_Servidor.model.Recipe;
+import com.hmaresc.TFG_Servidor.model.RecipeInstruction;
+import com.hmaresc.TFG_Servidor.service.RecipeInstructionService;
 import com.hmaresc.TFG_Servidor.service.RecipeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/recipe")
-public class RecipeController {
+@RequestMapping("/recipeinstruction")
+public class RecipeInstructionController {
 
     @Autowired
-    private RecipeService recipeService;
+    private RecipeInstructionService recipeInstructionService;
 
     // .......................................................
     // .......................................................
@@ -23,22 +25,22 @@ public class RecipeController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // GET /recipe/
+    // GET /recipeinstruction/
     // .......................................................
     @GetMapping
-    public List<Recipe> getAllRecipes() {
-        return recipeService.getAllRecipes();
+    public List<RecipeInstruction> getAllRecipesInstruction() {
+        return recipeInstructionService.getAllRecipesInstruction();
     }
 
     // .......................................................
-    // GET /recipe/<id>
+    // GET /recipeinstruction/<id>
     // .......................................................
     @GetMapping("/{id}")
-    public ResponseEntity<Recipe> getRecipeById(@PathVariable Long id) {
-        Optional<Recipe> recipe = recipeService.getRecipeById(id);
+    public ResponseEntity<RecipeInstruction> getRecipeInstructionById(@PathVariable Long id) {
+        Optional<RecipeInstruction> recipeInstruction = recipeInstructionService.getRecipeInstructionById(id);
 
-        if (recipe.isPresent()) {
-            return ResponseEntity.ok(recipe.get());
+        if (recipeInstruction.isPresent()) {
+            return ResponseEntity.ok(recipeInstruction.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -50,11 +52,11 @@ public class RecipeController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // POST /recipe/
+    // POST /recipeinstruction/
     // .......................................................
     @PostMapping
-    public ResponseEntity<Recipe> createRecipe(@Valid @RequestBody Recipe recipe) {
-        Recipe created = recipeService.createRecipe(recipe);
+    public ResponseEntity<RecipeInstruction> createRecipeInstruction(@Valid @RequestBody RecipeInstruction recipeInstruction) {
+        RecipeInstruction created = recipeInstructionService.createRecipeInstruction(recipeInstruction);
         return ResponseEntity.ok(created);
     }
 
@@ -64,12 +66,12 @@ public class RecipeController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // UPDATE /recipe/<id>
+    // UPDATE /recipeinstruction/<id>
     // .......................................................
     @PutMapping("/{id}")
-    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @Valid @RequestBody Recipe recipeDetails) {
-        Optional<Recipe> updatedRecipe = recipeService.updateRecipe(id, recipeDetails);
-        return updatedRecipe.map(ResponseEntity::ok)
+    public ResponseEntity<RecipeInstruction> updateRecipeInstruction(@PathVariable Long id, @Valid @RequestBody RecipeInstruction recipeInstructionDetails) {
+        Optional<RecipeInstruction> updatedRecipeInstruction = recipeInstructionService.updateRecipeInstruction(id, recipeInstructionDetails);
+        return updatedRecipeInstruction.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -79,11 +81,11 @@ public class RecipeController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // DELETE /recipe/<id>
+    // DELETE /recipeinstruction/<id>
     // .......................................................
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
-        boolean deleted = recipeService.deleteRecipe(id);
+    public ResponseEntity<Void> deleteRecipeInstruction(@PathVariable Long id) {
+        boolean deleted = recipeInstructionService.deleteRecipeInstruction(id);
         if (deleted) {
             return ResponseEntity.noContent().build();
         }

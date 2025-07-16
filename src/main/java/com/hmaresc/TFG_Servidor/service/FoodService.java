@@ -27,6 +27,10 @@ public class FoodService {
         return foodRepository.findById(id);
     }
 
+    public Optional<Food> findByCode(String code) {
+        return foodRepository.findByCode(code);
+    }
+
     // .................................................................
     //  << POST >>
     // .................................................................

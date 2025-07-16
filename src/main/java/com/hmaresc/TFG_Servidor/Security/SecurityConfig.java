@@ -45,6 +45,8 @@ public class SecurityConfig {
                                 .permitAll()
                                 .requestMatchers("/auth/**")
                                 .permitAll()
+                                .requestMatchers("/temhum/**")
+                                .permitAll()
                                 .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable())

@@ -1,9 +1,10 @@
 package com.hmaresc.TFG_Servidor.controller;
 
 import com.hmaresc.TFG_Servidor.model.Recipe;
-import com.hmaresc.TFG_Servidor.model.RecipeFood;
-import com.hmaresc.TFG_Servidor.service.RecipeFoodService;
+import com.hmaresc.TFG_Servidor.model.TemperatureHumidity;
+import com.hmaresc.TFG_Servidor.service.TemperatureHumidityService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/recipefood")
-public class RecipeFoodController {
+@RequestMapping("/temhum")
+public class TemperatureHumidityController {
 
-    private RecipeFoodService recipeFoodService;
+    @Autowired
+    private TemperatureHumidityService temperatureHumidityService;
 
     // .......................................................
     // .......................................................
@@ -22,22 +24,22 @@ public class RecipeFoodController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // GET /recipefood/
+    // GET /temhum/
     // .......................................................
     @GetMapping
-    public List<RecipeFood> getAllRecipesFoods() {
-        return recipeFoodService.getAllRecipesFoods();
+    public List<TemperatureHumidity> getAllTemperatureHumidity() {
+        return temperatureHumidityService.getAllTemperatureHumidity();
     }
 
     // .......................................................
-    // GET /recipefood/<id>
+    // GET /temhum/<id>
     // .......................................................
     @GetMapping("/{id}")
-    public ResponseEntity<RecipeFood> getRecipeFoodById(@PathVariable Long id) {
-        Optional<RecipeFood> recipeFood = recipeFoodService.getRecipeFoodById(id);
+    public ResponseEntity<TemperatureHumidity> getTemperatureHumidityById(@PathVariable Long id) {
+        Optional<TemperatureHumidity> temperatureHumidity = temperatureHumidityService.getTemperatureHumidityById(id);
 
-        if (recipeFood.isPresent()) {
-            return ResponseEntity.ok(recipeFood.get());
+        if (temperatureHumidity.isPresent()) {
+            return ResponseEntity.ok(temperatureHumidity.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -49,11 +51,11 @@ public class RecipeFoodController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // POST /recipefood/
+    // POST /temhum/
     // .......................................................
     @PostMapping
-    public ResponseEntity<RecipeFood> createRecipeFood(@Valid @RequestBody RecipeFood recipeFood) {
-        RecipeFood created = recipeFoodService.createRecipeFood(recipeFood);
+    public ResponseEntity<TemperatureHumidity> createTemperatureHumidity(@Valid @RequestBody TemperatureHumidity temperatureHumidity) {
+        TemperatureHumidity created = temperatureHumidityService.createTemperatureHumidity(temperatureHumidity);
         return ResponseEntity.ok(created);
     }
 
@@ -63,12 +65,12 @@ public class RecipeFoodController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // UPDATE /recipefood/<id>
+    // UPDATE /temhum/<id>
     // .......................................................
     @PutMapping("/{id}")
-    public ResponseEntity<RecipeFood> updateRecipeFood(@PathVariable Long id, @Valid @RequestBody RecipeFood recipeFoodDetails) {
-        Optional<RecipeFood> updatedRecipeFood = recipeFoodService.updateRecipeFood(id, recipeFoodDetails);
-        return updatedRecipeFood.map(ResponseEntity::ok)
+    public ResponseEntity<TemperatureHumidity> updateTemperatureHumidity(@PathVariable Long id, @Valid @RequestBody TemperatureHumidity temperatureHumidityDetails) {
+        Optional<TemperatureHumidity> updatedTemperatureHumidity = temperatureHumidityService.updateTemperatureHumidity(id, temperatureHumidityDetails);
+        return updatedTemperatureHumidity.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -78,11 +80,11 @@ public class RecipeFoodController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // DELETE /recipefood/<id>
+    // DELETE /temhum/<id>
     // .......................................................
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRecipeFood(@PathVariable Long id) {
-        boolean deleted = recipeFoodService.deleteRecipeFood(id);
+    public ResponseEntity<Void> deleteTemperatureHumidity(@PathVariable Long id) {
+        boolean deleted = temperatureHumidityService.deleteTemperatureHumidity(id);
         if (deleted) {
             return ResponseEntity.noContent().build();
         }

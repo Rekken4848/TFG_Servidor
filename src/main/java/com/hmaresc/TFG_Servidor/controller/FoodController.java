@@ -47,15 +47,32 @@ public class FoodController {
     }
 
     // .......................................................
+    // GET /food/code/<code>
+    // .......................................................
+    @GetMapping("/code/{code}")
+    public ResponseEntity<Food> getFoodByCode(@PathVariable String code) {
+        Optional<Food> food = foodService.findByCode(code);
+
+        if (food.isPresent()) {
+            return ResponseEntity.ok(food.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // .......................................................
     // .......................................................
     // .......................POST............................
     // .......................................................
     // .......................................................
     // .......................................................
-    // POST /food/
+    // POST /food/<user_id>
     // .......................................................
-    @PostMapping
-    public ResponseEntity<Food> createFood(@Valid @RequestBody Food food) {
+    @PostMapping("/{user_id}")
+    public ResponseEntity<Food> createFood(@PathVariable Long user_id, @Valid @RequestBody Food food) {
+        User userWithId = new User();
+        userWithId.setId(user_id);
+        food.setUser(userWithId);
         Food created = foodService.createFood(food);
         return ResponseEntity.ok(created);
     }
@@ -66,10 +83,13 @@ public class FoodController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // UPDATE /food/<id>
+    // UPDATE /food/<id>/<user_id>
     // .......................................................
-    @PutMapping("/{id}")
-    public ResponseEntity<Food> updateFood(@PathVariable Long id, @Valid @RequestBody Food foodDetails) {
+    @PutMapping("/{id}/{user_id}")
+    public ResponseEntity<Food> updateFood(@PathVariable Long id, @PathVariable Long user_id, @Valid @RequestBody Food foodDetails) {
+        User userWithId = new User();
+        userWithId.setId(user_id);
+        foodDetails.setUser(userWithId);
         Optional<Food> updatedFood = foodService.updateFood(id, foodDetails);
         return updatedFood.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
