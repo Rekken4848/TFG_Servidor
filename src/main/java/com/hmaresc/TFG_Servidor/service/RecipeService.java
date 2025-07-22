@@ -1,10 +1,12 @@
 package com.hmaresc.TFG_Servidor.service;
 
 import com.hmaresc.TFG_Servidor.model.Recipe;
-import com.hmaresc.TFG_Servidor.model.RecipeFood;
+import com.hmaresc.TFG_Servidor.model.User;
+import com.hmaresc.TFG_Servidor.model.UserStats;
 import com.hmaresc.TFG_Servidor.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +26,21 @@ public class RecipeService {
 
     public Optional<Recipe> getRecipeById(Long id) {
         return recipeRepository.findById(id);
+    }
+
+    @Transactional
+    public Optional<List<Recipe>> getRecipeByUser(User user) {
+        //return recipeRepository.findByUser(user);
+        Optional<List<Recipe>> recipes = recipeRepository.findByUser(user);
+
+        recipes.ifPresent(list -> {
+            for (Recipe recipe : list) {
+                recipe.getIngredients().size();
+                recipe.getInstructions().size();
+            }
+        });
+
+        return recipes;
     }
 
     // .................................................................

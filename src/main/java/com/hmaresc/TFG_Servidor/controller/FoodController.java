@@ -1,8 +1,10 @@
 package com.hmaresc.TFG_Servidor.controller;
 
 import com.hmaresc.TFG_Servidor.model.Food;
+import com.hmaresc.TFG_Servidor.model.Recipe;
 import com.hmaresc.TFG_Servidor.model.User;
 import com.hmaresc.TFG_Servidor.service.FoodService;
+import com.hmaresc.TFG_Servidor.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ public class FoodController {
 
     @Autowired
     private FoodService foodService;
+
+    @Autowired
+    private UserService userService;
 
     // .......................................................
     // .......................................................
@@ -61,18 +66,32 @@ public class FoodController {
     }
 
     // .......................................................
+    // GET /food/myfoods/<email>
+    // .......................................................
+    @GetMapping("/myfoods/{email}")
+    public ResponseEntity<List<Food>> getFoodByEmail(@PathVariable String email) {
+        Optional<User> userWithId = userService.getUserByEmail(email);
+        Optional<List<Food>> foods = foodService.getFoodByUser(userWithId.get());
+
+        if (foods.isPresent()) {
+            return ResponseEntity.ok(foods.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // .......................................................
     // .......................................................
     // .......................POST............................
     // .......................................................
     // .......................................................
     // .......................................................
-    // POST /food/<user_id>
+    // POST /food/<email>
     // .......................................................
-    @PostMapping("/{user_id}")
-    public ResponseEntity<Food> createFood(@PathVariable Long user_id, @Valid @RequestBody Food food) {
-        User userWithId = new User();
-        userWithId.setId(user_id);
-        food.setUser(userWithId);
+    @PostMapping("/{email}")
+    public ResponseEntity<Food> createFood(@PathVariable String email, @Valid @RequestBody Food food) {
+        Optional<User> userWithId = userService.getUserByEmail(email);
+        food.setUser(userWithId.get());
         Food created = foodService.createFood(food);
         return ResponseEntity.ok(created);
     }
@@ -83,13 +102,12 @@ public class FoodController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // UPDATE /food/<id>/<user_id>
+    // UPDATE /food/<id>/<email>
     // .......................................................
-    @PutMapping("/{id}/{user_id}")
-    public ResponseEntity<Food> updateFood(@PathVariable Long id, @PathVariable Long user_id, @Valid @RequestBody Food foodDetails) {
-        User userWithId = new User();
-        userWithId.setId(user_id);
-        foodDetails.setUser(userWithId);
+    @PutMapping("/{id}/{email}")
+    public ResponseEntity<Food> updateFood(@PathVariable Long id, @PathVariable String email, @Valid @RequestBody Food foodDetails) {
+        Optional<User> userWithId = userService.getUserByEmail(email);
+        foodDetails.setUser(userWithId.get());
         Optional<Food> updatedFood = foodService.updateFood(id, foodDetails);
         return updatedFood.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

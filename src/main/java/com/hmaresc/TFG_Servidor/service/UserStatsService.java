@@ -2,7 +2,6 @@ package com.hmaresc.TFG_Servidor.service;
 
 import com.hmaresc.TFG_Servidor.model.User;
 import com.hmaresc.TFG_Servidor.model.UserStats;
-import com.hmaresc.TFG_Servidor.model.UsersRecipes;
 import com.hmaresc.TFG_Servidor.repository.UserStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

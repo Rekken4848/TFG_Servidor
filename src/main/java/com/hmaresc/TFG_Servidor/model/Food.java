@@ -3,6 +3,8 @@ package com.hmaresc.TFG_Servidor.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.List;
 
@@ -13,13 +15,13 @@ public class Food {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonProperty("user_id")
     @JsonIgnore
     private User user;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String code;
 
     @Column(nullable = false)
@@ -29,7 +31,8 @@ public class Food {
     private String brand;
 
     private String quantity;
-    private Float productQuantity;
+
+    private float productQuantity;
 
     @Column(name = "product_quantity_unit")
     private String productQuantityUnit;
@@ -38,36 +41,39 @@ public class Food {
     private String servingSize;
 
     @Column(name = "calories_per_serving")
-    private Float caloriesPerServing;
+    private float caloriesPerServing;
 
     @Column(name = "calories_per_100g")
-    private Float caloriesPer100g;
+    private float caloriesPer100g;
 
     @Column(name = "proteins_per_100g")
-    private Float proteinsPer100g;
+    private float proteinsPer100g;
 
     @Column(name = "fat_per_100g")
-    private Float fatPer100g;
+    private float fatPer100g;
 
     @Column(name = "carbs_per_100g")
-    private Float carbsPer100g;
+    private float carbsPer100g;
 
     @Column(name = "sugars_per_100g")
-    private Float sugarsPer100g;
+    private float sugarsPer100g;
 
     @Column(name = "fiber_per_100g")
-    private Float fiberPer100g;
+    private float fiberPer100g;
 
     private String image;
+
     private String nutriscore;
 
-    @ElementCollection
-    private List<String> allergens;
+    @JdbcTypeCode(SqlTypes.ARRAY)
+    @Column(name = "allergens", columnDefinition = "text[]")
+    private String[] allergens;
 
     private String ingredients;
 
-    @ElementCollection
-    private List<String> countries;
+    @JdbcTypeCode(SqlTypes.ARRAY)
+    @Column(name = "countries", columnDefinition = "text[]")
+    private String[] countries;
 
     // Getters y Setters
 
@@ -119,11 +125,11 @@ public class Food {
         this.quantity = quantity;
     }
 
-    public Float getProductQuantity() {
+    public float getProductQuantity() {
         return productQuantity;
     }
 
-    public void setProductQuantity(Float productQuantity) {
+    public void setProductQuantity(float productQuantity) {
         this.productQuantity = productQuantity;
     }
 
@@ -143,59 +149,59 @@ public class Food {
         this.servingSize = servingSize;
     }
 
-    public Float getCaloriesPerServing() {
+    public float getCaloriesPerServing() {
         return caloriesPerServing;
     }
 
-    public void setCaloriesPerServing(Float caloriesPerServing) {
+    public void setCaloriesPerServing(float caloriesPerServing) {
         this.caloriesPerServing = caloriesPerServing;
     }
 
-    public Float getCaloriesPer100g() {
+    public float getCaloriesPer100g() {
         return caloriesPer100g;
     }
 
-    public void setCaloriesPer100g(Float caloriesPer100g) {
+    public void setCaloriesPer100g(float caloriesPer100g) {
         this.caloriesPer100g = caloriesPer100g;
     }
 
-    public Float getProteinsPer100g() {
+    public float getProteinsPer100g() {
         return proteinsPer100g;
     }
 
-    public void setProteinsPer100g(Float proteinsPer100g) {
+    public void setProteinsPer100g(float proteinsPer100g) {
         this.proteinsPer100g = proteinsPer100g;
     }
 
-    public Float getFatPer100g() {
+    public float getFatPer100g() {
         return fatPer100g;
     }
 
-    public void setFatPer100g(Float fatPer100g) {
+    public void setFatPer100g(float fatPer100g) {
         this.fatPer100g = fatPer100g;
     }
 
-    public Float getCarbsPer100g() {
+    public float getCarbsPer100g() {
         return carbsPer100g;
     }
 
-    public void setCarbsPer100g(Float carbsPer100g) {
+    public void setCarbsPer100g(float carbsPer100g) {
         this.carbsPer100g = carbsPer100g;
     }
 
-    public Float getSugarsPer100g() {
+    public float getSugarsPer100g() {
         return sugarsPer100g;
     }
 
-    public void setSugarsPer100g(Float sugarsPer100g) {
+    public void setSugarsPer100g(float sugarsPer100g) {
         this.sugarsPer100g = sugarsPer100g;
     }
 
-    public Float getFiberPer100g() {
+    public float getFiberPer100g() {
         return fiberPer100g;
     }
 
-    public void setFiberPer100g(Float fiberPer100g) {
+    public void setFiberPer100g(float fiberPer100g) {
         this.fiberPer100g = fiberPer100g;
     }
 
@@ -215,11 +221,11 @@ public class Food {
         this.nutriscore = nutriscore;
     }
 
-    public List<String> getAllergens() {
+    public String[] getAllergens() {
         return allergens;
     }
 
-    public void setAllergens(List<String> allergens) {
+    public void setAllergens(String[] allergens) {
         this.allergens = allergens;
     }
 
@@ -231,11 +237,11 @@ public class Food {
         this.ingredients = ingredients;
     }
 
-    public List<String> getCountries() {
+    public String[] getCountries() {
         return countries;
     }
 
-    public void setCountries(List<String> countries) {
+    public void setCountries(String[] countries) {
         this.countries = countries;
     }
 }

@@ -1,5 +1,6 @@
 package com.hmaresc.TFG_Servidor.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,13 +11,17 @@ public class RecipeIngredient {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "recipe_id")
+    @JoinColumn(name = "recipe_id", nullable = false)
+    @JsonIgnore
     private Recipe recipe;
 
+    @Column(nullable = false)
     private String quantity;
 
+    @Column(nullable = false)
     private String unit;
 
+    @Column(nullable = false)
     private String name;
 
     // Getters y setters

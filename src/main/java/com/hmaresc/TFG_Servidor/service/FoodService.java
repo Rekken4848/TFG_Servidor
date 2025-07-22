@@ -1,6 +1,7 @@
 package com.hmaresc.TFG_Servidor.service;
 
 import com.hmaresc.TFG_Servidor.model.Food;
+import com.hmaresc.TFG_Servidor.model.Recipe;
 import com.hmaresc.TFG_Servidor.model.User;
 import com.hmaresc.TFG_Servidor.repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,10 @@ public class FoodService {
 
     public Optional<Food> findByCode(String code) {
         return foodRepository.findByCode(code);
+    }
+
+    public Optional<List<Food>> getFoodByUser(User user) {
+        return foodRepository.findByUser(user);
     }
 
     // .................................................................
