@@ -27,6 +27,10 @@ public class TemperatureHumidityService {
         return temperatureHumidityRepository.findById(id);
     }
 
+    public Optional<TemperatureHumidity> getLatestData() {
+        return temperatureHumidityRepository.findLatest();
+    }
+
     // .................................................................
     //  << POST >>
     // .................................................................

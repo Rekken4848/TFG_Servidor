@@ -79,7 +79,7 @@ public class RecipeController {
     // POST /recipe/<email>
     // .......................................................
     @PostMapping(value = "/{email}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> createRecipe(@PathVariable String email, @RequestPart("image") MultipartFile file, @RequestPart("recipe") Recipe recipe) {
+    public ResponseEntity<?> createRecipe(@PathVariable String email, @RequestPart(value = "image", required = false) MultipartFile file, @RequestPart("recipe") Recipe recipe) {
         Optional<User> userWithId = userService.getUserByEmail(email);
         recipe.setUser(userWithId.get());
         for (RecipeIngredient ingredient : recipe.getIngredients()) {
@@ -88,7 +88,7 @@ public class RecipeController {
         for (RecipeInstruction instruction : recipe.getInstructions()) {
             instruction.setRecipe(recipe);
         }
-        if(!file.isEmpty()){
+        if(file != null){
             try {
                 recipe.setImageFile(file.getBytes());
             } catch (IOException e) {

@@ -41,11 +41,23 @@ public class SecurityConfig {
                                 .permitAll()
                                 .requestMatchers("/userstats/**")
                                 .permitAll()*/
+                                .requestMatchers(
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html",
+                                        "/doc/**",
+                                        "/swagger-resources/**",
+                                        "/webjars/**"
+                                ).permitAll()
                                 .requestMatchers(HttpMethod.POST, "/users")
                                 .permitAll()
                                 .requestMatchers("/auth/**")
                                 .permitAll()
                                 .requestMatchers("/temhum/**")
+                                .permitAll()
+                                .requestMatchers("/weight/**")
+                                .permitAll()
+                                .requestMatchers("/bodyweight/**")
                                 .permitAll()
                                 .anyRequest().authenticated()
                 )

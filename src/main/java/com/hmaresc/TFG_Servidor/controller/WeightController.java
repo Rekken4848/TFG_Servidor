@@ -1,8 +1,8 @@
 package com.hmaresc.TFG_Servidor.controller;
 
-import com.hmaresc.TFG_Servidor.model.Recipe;
 import com.hmaresc.TFG_Servidor.model.TemperatureHumidity;
-import com.hmaresc.TFG_Servidor.service.TemperatureHumidityService;
+import com.hmaresc.TFG_Servidor.model.Weight;
+import com.hmaresc.TFG_Servidor.service.WeightService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/temhum")
-public class TemperatureHumidityController {
+@RequestMapping("/weight")
+public class WeightController {
 
     @Autowired
-    private TemperatureHumidityService temperatureHumidityService;
+    private WeightService weightService;
 
     // .......................................................
     // .......................................................
@@ -24,36 +24,36 @@ public class TemperatureHumidityController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // GET /temhum/
+    // GET /weight/
     // .......................................................
     @GetMapping
-    public List<TemperatureHumidity> getAllTemperatureHumidity() {
-        return temperatureHumidityService.getAllTemperatureHumidity();
+    public List<Weight> getAllWeights() {
+        return weightService.getAllWeights();
     }
 
     // .......................................................
-    // GET /temhum/<id>
+    // GET /weight/<id>
     // .......................................................
     @GetMapping("/{id}")
-    public ResponseEntity<TemperatureHumidity> getTemperatureHumidityById(@PathVariable Long id) {
-        Optional<TemperatureHumidity> temperatureHumidity = temperatureHumidityService.getTemperatureHumidityById(id);
+    public ResponseEntity<Weight> getWeightById(@PathVariable Long id) {
+        Optional<Weight> weight = weightService.getWeightById(id);
 
-        if (temperatureHumidity.isPresent()) {
-            return ResponseEntity.ok(temperatureHumidity.get());
+        if (weight.isPresent()) {
+            return ResponseEntity.ok(weight.get());
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     // .......................................................
-    // GET /temhum/latest
+    // GET /weight/latest
     // .......................................................
     @GetMapping("/latest")
-    public ResponseEntity<TemperatureHumidity> getLatestTemperatureHumidity() {
-        Optional<TemperatureHumidity> temperatureHumidity = temperatureHumidityService.getLatestData();
+    public ResponseEntity<Weight> getLatestWeight() {
+        Optional<Weight> weight = weightService.getLatestData();
 
-        if (temperatureHumidity.isPresent()) {
-            return ResponseEntity.ok(temperatureHumidity.get());
+        if (weight.isPresent()) {
+            return ResponseEntity.ok(weight.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -65,11 +65,11 @@ public class TemperatureHumidityController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // POST /temhum/
+    // POST /weight/
     // .......................................................
     @PostMapping
-    public ResponseEntity<TemperatureHumidity> createTemperatureHumidity(@Valid @RequestBody TemperatureHumidity temperatureHumidity) {
-        TemperatureHumidity created = temperatureHumidityService.createTemperatureHumidity(temperatureHumidity);
+    public ResponseEntity<Weight> createWeight(@Valid @RequestBody Weight weight) {
+        Weight created = weightService.createWeight(weight);
         return ResponseEntity.ok(created);
     }
 
@@ -79,12 +79,12 @@ public class TemperatureHumidityController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // UPDATE /temhum/<id>
+    // UPDATE /weight/<id>
     // .......................................................
     @PutMapping("/{id}")
-    public ResponseEntity<TemperatureHumidity> updateTemperatureHumidity(@PathVariable Long id, @Valid @RequestBody TemperatureHumidity temperatureHumidityDetails) {
-        Optional<TemperatureHumidity> updatedTemperatureHumidity = temperatureHumidityService.updateTemperatureHumidity(id, temperatureHumidityDetails);
-        return updatedTemperatureHumidity.map(ResponseEntity::ok)
+    public ResponseEntity<Weight> updateWeight(@PathVariable Long id, @Valid @RequestBody Weight weightDetails) {
+        Optional<Weight> updatedWeight = weightService.updateWeight(id, weightDetails);
+        return updatedWeight.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -94,11 +94,11 @@ public class TemperatureHumidityController {
     // .......................................................
     // .......................................................
     // .......................................................
-    // DELETE /temhum/<id>
+    // DELETE /weight/<id>
     // .......................................................
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTemperatureHumidity(@PathVariable Long id) {
-        boolean deleted = temperatureHumidityService.deleteTemperatureHumidity(id);
+    public ResponseEntity<Void> deleteWeight(@PathVariable Long id) {
+        boolean deleted = weightService.deleteWeight(id);
         if (deleted) {
             return ResponseEntity.noContent().build();
         }
