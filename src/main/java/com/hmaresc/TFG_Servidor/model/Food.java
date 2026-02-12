@@ -32,33 +32,44 @@ public class Food {
 
     private String quantity;
 
+    @Column(name = "product_quantity")
+    @JsonProperty("product_quantity")
     private float productQuantity;
 
     @Column(name = "product_quantity_unit")
+    @JsonProperty("product_quantity_unit")
     private String productQuantityUnit;
 
     @Column(name = "serving_size")
+    @JsonProperty("serving_size")
     private String servingSize;
 
     @Column(name = "calories_per_serving")
+    @JsonProperty("calories_per_serving")
     private float caloriesPerServing;
 
     @Column(name = "calories_per_100g")
+    @JsonProperty("calories_per_100g")
     private float caloriesPer100g;
 
     @Column(name = "proteins_per_100g")
+    @JsonProperty("proteins_per_100g")
     private float proteinsPer100g;
 
     @Column(name = "fat_per_100g")
+    @JsonProperty("fat_per_100g")
     private float fatPer100g;
 
     @Column(name = "carbs_per_100g")
+    @JsonProperty("carbs_per_100g")
     private float carbsPer100g;
 
     @Column(name = "sugars_per_100g")
+    @JsonProperty("sugars_per_100g")
     private float sugarsPer100g;
 
     @Column(name = "fiber_per_100g")
+    @JsonProperty("fiber_per_100g")
     private float fiberPer100g;
 
     private String image;
